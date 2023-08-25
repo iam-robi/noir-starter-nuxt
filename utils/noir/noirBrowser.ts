@@ -14,14 +14,6 @@ import { ethers } from "ethers"; // I'm lazy so I'm using ethers to pad my input
 import circuit from "../../circuits/target/noirstarter.json";
 import { Ptr } from "@aztec/bb.js/dest/node/types";
 
-function hexZeroPad(value: string, byteLength: number): string {
-  const padded =
-    value.length >= byteLength * 2
-      ? value.slice(-byteLength * 2)
-      : ("0".repeat(byteLength * 2) + value).slice(-byteLength * 2);
-  return `0x${padded}`;
-}
-
 export class NoirBrowser {
   acir: string = "";
   acirBuffer: Uint8Array = Uint8Array.from([]);
