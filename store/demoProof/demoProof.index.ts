@@ -8,6 +8,7 @@ export const useDemoProof = defineStore("demoProof", {
     proofs: [],
     privateInputX: 0,
     publicInputY: 2,
+    verifierAddress: "0xD6bD14131D4d426b9d8B38C42CE7328100510691",
   }),
 
   actions: {

@@ -2,6 +2,7 @@ export interface ProofState {
   proofs: [ProofMeta] | [];
   publicInputY: number;
   privateInputX: number;
+  verifierAddress: string;
 }
 
 export type DemoArgs = {
