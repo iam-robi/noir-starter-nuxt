@@ -54,7 +54,7 @@
         </div>
       </div>
     </div>
-    <UNotifications />
+    <NuxtSnackbar />
   </div>
 </template>
 
@@ -67,8 +67,10 @@ import { useDemoProof } from "/store/demoProof/demoProof.index";
 import { useNoirInstance } from "/store/noir/noir.index";
 const demoProofStore = useDemoProof();
 const noirStore = useNoirInstance();
-const toast = useToast();
+// const toast = useToast();
 // Initialize noir when the component is mounted
+const snackbar = useSnackbar();
+
 onMounted(async () => {
   noirStore.noir = new NoirBrowser();
   await noirStore.noir.init();
@@ -86,23 +88,19 @@ const computeProof = async function () {
     .computeProof()
     .then((res) => {})
     .catch((err) => {
-      toast.add({
-        id: "verify-proof",
-        title: "Can not compute proof",
-        description: err,
-        icon: "i-heroicons-check-circle",
-        color: "red",
+      console.log("err", err);
+      snackbar.add({
+        type: "error",
+        text: err,
       });
     });
 };
 
 const verifyProof = async function () {
   const result = await demoProofStore.verifyProof();
-  toast.add({
-    id: "verify-proof",
-    title: "Proof verified",
-    description: "Your proof was successfully verified on-chain !",
-    icon: "i-heroicons-check-circle",
+  snackbar.add({
+    type: "success",
+    text: "Your proof was successfully verified on-chain !",
   });
 };
 </script>

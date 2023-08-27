@@ -8,8 +8,11 @@ import nodeStdlibBrowser from "node-stdlib-browser";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   modules: [
-    "@nuxthq/ui",
+    "nuxt-snackbar",
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/color-mode",
     [
       "@pinia/nuxt",
       {

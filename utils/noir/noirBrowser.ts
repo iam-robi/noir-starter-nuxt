@@ -24,7 +24,6 @@ export class NoirBrowser {
 
   async init() {
     await initACVM();
-    console.log("is this done ? ");
     // TODO disabled until we get a fix for std
     // const compiled_noir = compile({
     //   entry_point: `${__dirname}/../../circuits/src/main.nr`,

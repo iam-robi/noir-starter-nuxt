@@ -52,7 +52,7 @@ export const useDemoProof = defineStore("demoProof", {
 
         this.proof = proofMeta;
       } catch (err) {
-        throw new Error(err);
+        throw err;
       }
     },
     verifyProof: async function () {
@@ -80,8 +80,6 @@ export const useDemoProof = defineStore("demoProof", {
 
           const ver = await contract.verify(slicedProof, [publicInputs]);
           console.log("on chain verification result:", ver);
-
-          const toast = useToast();
 
           const proofMeta = { ...this.proof, verified: true };
           this.proof = proofMeta;
