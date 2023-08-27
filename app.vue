@@ -2,11 +2,12 @@
   <div>
     <Navbar></Navbar>
     <LayoutHeroBanner></LayoutHeroBanner>
-
     <div class="flex justify-center items-center">
-      <div class="w-full max-w-md p-10 card rounded-box">
-        <!-- Card content goes here -->
-        <div class="flex flex-col space-y-4">
+      <div
+        class="w-full max-w-2xl flex flex-row space-x-6 p-10 card rounded-box"
+      >
+        <!-- Input section -->
+        <div class="flex flex-col space-y-4 w-1/2">
           <label for="input1" class="text-lg font-bold">Input X: </label>
           <input
             id="input1"
@@ -24,15 +25,37 @@
             placeholder="Enter input Y"
             v-model.value="demoProofStore.publicInputY"
           />
-          <button @click="initializeNoir" class="btn">init</button>
           <button @click="demoProofStore.computeProof()" class="btn">
-            calculateProof
+            Compute Proof
           </button>
-          <button @click="demoProofStore.verifyProof()" class="btn">
-            verify proof
-          </button>
+        </div>
 
-          <div>Proof (random string for now) {{ proof }}</div>
+        <!-- Proof section -->
+        <div
+          id="proofs-section"
+          class="w-1/2 flex flex-col space-y-4 bg-center bg-cover"
+        >
+          <div
+            v-if="demoProofStore.proof"
+            class="card w-full glass backdrop-blur-md"
+          >
+            <div class="card-body">
+              <h2 class="card-title">Proof Computed</h2>
+              <p>
+                Proof Generated in {{ demoProofStore.proof.computationTime }} ms
+              </p>
+              <p>Public input: {{ demoProofStore.proof.parameters.y }}</p>
+              <p>Private input: {{ demoProofStore.proof.parameters.x }}</p>
+              <div class="card-actions justify-end">
+                <button
+                  @click="demoProofStore.verifyProof()"
+                  class="btn btn-primary"
+                >
+                  Verify
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

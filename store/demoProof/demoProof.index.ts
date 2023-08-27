@@ -2,13 +2,14 @@
 import { defineStore } from "pinia";
 import { ProofState } from "./demoProof.types";
 import { useNoirInstance } from "~/store/noir/noir.index";
-
+import { ultraVerifierAbi } from "~/utils/noir/abi/UltraVerifier";
+import { ethers } from "ethers";
 export const useDemoProof = defineStore("demoProof", {
   state: (): ProofState => ({
-    proofs: [],
+    proof: null,
     privateInputX: 0,
     publicInputY: 2,
-    verifierAddress: "0xD6bD14131D4d426b9d8B38C42CE7328100510691",
+    verifierAddress: "0x668C963776248b95aD19e33522A1125edbAfD004",
   }),
 
   actions: {
@@ -50,25 +51,43 @@ export const useDemoProof = defineStore("demoProof", {
           description: "",
         };
 
-        this.proofs.push(proofMeta);
+        this.proof = proofMeta;
       } catch (err) {
         console.log(err);
       }
     },
     verifyProof: async function () {
       // await noir.value.generateWitness(input);
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
       const noirStore = useNoirInstance();
-      if (this.proofs && this.proofs.length > 0) {
+      if (this.proof) {
         try {
           const verification = await noirStore.noir.verifyProof(
             // @ts-ignore
-            this.proofs[0].data
+            this.proof.data
           );
-          console.log(verification);
-          const proofMeta = { ...this.proofs[0], verified: true };
-          console.log(proofMeta);
+          console.log("verification result:", verification);
+
+          // @ts-ignore
+          const publicInputs = this.proof.data.slice(0, 32);
+          // @ts-ignore
+          const slicedProof = this.proof.data.slice(32);
+
+          let contract = new ethers.Contract(
+            this.verifierAddress,
+            ultraVerifierAbi,
+            provider.getSigner()
+          );
+
+          const ver = await contract.verify(slicedProof, [publicInputs]);
+          console.log("on chain verification result:", ver);
+
+          const proofMeta = { ...this.proof, verified: true };
+          this.proof = proofMeta;
         } catch (err) {
-          console.log("Error verifying your proof");
+          console.log("Error verifying your proof", err);
         } finally {
           noirStore.noir.destroy();
         }

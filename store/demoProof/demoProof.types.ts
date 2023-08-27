@@ -1,5 +1,5 @@
 export interface ProofState {
-  proofs: [ProofMeta] | [];
+  proof: ProofMeta | null;
   publicInputY: number;
   privateInputX: number;
   verifierAddress: string;
