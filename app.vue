@@ -25,9 +25,7 @@
             placeholder="Enter input Y"
             v-model.value="demoProofStore.publicInputY"
           />
-          <button @click="demoProofStore.computeProof()" class="btn">
-            Compute Proof
-          </button>
+          <button @click="computeProof" class="btn">Compute Proof</button>
         </div>
 
         <!-- Proof section -->
@@ -47,10 +45,7 @@
               <p>Public input: {{ demoProofStore.proof.parameters.y }}</p>
               <p>Private input: {{ demoProofStore.proof.parameters.x }}</p>
               <div class="card-actions justify-end">
-                <button
-                  @click="demoProofStore.verifyProof()"
-                  class="btn btn-primary"
-                >
+                <button @click="verifyProof" class="btn btn-primary">
                   Verify
                 </button>
               </div>
@@ -59,6 +54,7 @@
         </div>
       </div>
     </div>
+    <UNotifications />
   </div>
 </template>
 
@@ -71,7 +67,7 @@ import { useDemoProof } from "/store/demoProof/demoProof.index";
 import { useNoirInstance } from "/store/noir/noir.index";
 const demoProofStore = useDemoProof();
 const noirStore = useNoirInstance();
-
+const toast = useToast();
 // Initialize noir when the component is mounted
 onMounted(async () => {
   noirStore.noir = new NoirBrowser();
@@ -84,4 +80,29 @@ onBeforeUnmount(() => {
     noir.value.destroy();
   }
 });
+
+const computeProof = async function () {
+  const result = await demoProofStore
+    .computeProof()
+    .then((res) => {})
+    .catch((err) => {
+      toast.add({
+        id: "verify-proof",
+        title: "Can not compute proof",
+        description: err,
+        icon: "i-heroicons-check-circle",
+        color: "red",
+      });
+    });
+};
+
+const verifyProof = async function () {
+  const result = await demoProofStore.verifyProof();
+  toast.add({
+    id: "verify-proof",
+    title: "Proof verified",
+    description: "Your proof was successfully verified on-chain !",
+    icon: "i-heroicons-check-circle",
+  });
+};
 </script>

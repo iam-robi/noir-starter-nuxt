@@ -23,7 +23,6 @@ export const useDemoProof = defineStore("demoProof", {
         y: parseInt(this.publicInputY.toString()),
       };
 
-      console.log(input);
       try {
         const startGenerateWitness = Date.now();
         const witness = await noirStore.noir.generateWitness(input);
@@ -53,12 +52,10 @@ export const useDemoProof = defineStore("demoProof", {
 
         this.proof = proofMeta;
       } catch (err) {
-        console.log(err);
+        throw new Error(err);
       }
     },
     verifyProof: async function () {
-      // await noir.value.generateWitness(input);
-
       const provider = new ethers.providers.Web3Provider(window.ethereum);
 
       const noirStore = useNoirInstance();
@@ -83,6 +80,8 @@ export const useDemoProof = defineStore("demoProof", {
 
           const ver = await contract.verify(slicedProof, [publicInputs]);
           console.log("on chain verification result:", ver);
+
+          const toast = useToast();
 
           const proofMeta = { ...this.proof, verified: true };
           this.proof = proofMeta;

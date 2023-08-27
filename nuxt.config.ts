@@ -9,8 +9,7 @@ import nodeStdlibBrowser from "node-stdlib-browser";
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode",
+    "@nuxthq/ui",
     [
       "@pinia/nuxt",
       {

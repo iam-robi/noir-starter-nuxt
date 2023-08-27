@@ -11,6 +11,7 @@
   "dependencies": {
     "@aztec/bb.js": "0.3.6",
     "@noir-lang/acvm_js": "git+https://git@github.com/noir-lang/acvm-simulator-wasm.git#b9d9ca9dfc5140839f23998d9466307215607c42",
+    "@nuxthq/ui": "^2.7.0",
     "@phosphor-icons/vue": "^2.1.6",
     "@pinia/nuxt": "^0.4.11",
     "ethers": "^5.7.2",
