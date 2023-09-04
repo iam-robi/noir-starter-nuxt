@@ -8,7 +8,9 @@ import nodeStdlibBrowser from "node-stdlib-browser";
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-
+  experimental: {
+    asyncContext: true,
+  },
   modules: [
     "nuxt-snackbar",
     "@nuxtjs/tailwindcss",

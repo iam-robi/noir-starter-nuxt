@@ -97,10 +97,17 @@ const computeProof = async function () {
 };
 
 const verifyProof = async function () {
-  const result = await demoProofStore.verifyProof();
-  snackbar.add({
-    type: "success",
-    text: "Your proof was successfully verified on-chain !",
-  });
+  try {
+    await demoProofStore.verifyProof();
+    snackbar.add({
+      type: "success",
+      text: "Your proof was successfully verified on-chain !",
+    });
+  } catch (err) {
+    snackbar.add({
+      type: "error",
+      text: err,
+    });
+  }
 };
 </script>

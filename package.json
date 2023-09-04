@@ -6,7 +6,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "start": "nuxt"
   },
   "dependencies": {
     "@aztec/bb.js": "0.3.6",
@@ -32,7 +33,7 @@
     "@types/node": "^18.17.3",
     "daisyui": "^3.6.1",
     "naive-ui": "^2.34.4",
-    "nuxt": "^3.6.5",
+    "nuxt": "^3.7.0",
     "vite-plugin-wasm": "^3.2.2"
   }
 }
